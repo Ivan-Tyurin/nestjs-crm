@@ -1,0 +1,15 @@
+services:
+  accounts-db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:${ACCOUNTS_DATABASE_PORT}
+    environment:
+      POSTGRES_USER: ${ACCOUNTS_DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${ACCOUNTS_DATABASE_PASSWORD}
+      POSTGRES_DB: accounts
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
