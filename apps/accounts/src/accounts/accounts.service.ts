@@ -1,9 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { AccountEntity } from './entities/account.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { CreateAccountDto } from '@app/contracts';
 import { UsersService } from '../users/users.service';
+import { UserEntity } from '../users/entities/user.entity';
 
 @Injectable()
 export class AccountsService {
@@ -25,10 +30,10 @@ export class AccountsService {
       const account = queryRunner.manager.create(AccountEntity, {
         name: accountName,
       });
-      await queryRunner.manager.save(AccountEntity, account);
+      await queryRunner.manager.save(AccountEntity, account); // создание нового аккаунта
 
       createUserDto.accountId = account.accountId;
-      await this.usersService.create(createUserDto, queryRunner.manager); // создание основного пользователя (админа)
+      await this.usersService.create(createUserDto, queryRunner.manager); // создание основного пользователя (админа) для нового аккаунта
 
       await queryRunner.commitTransaction();
 
@@ -39,5 +44,18 @@ export class AccountsService {
     } finally {
       await queryRunner.release();
     }
+  }
+
+  async findById(accountId: number): Promise<AccountEntity> {
+    const account = await this.accountsRepository.findOneBy({ accountId });
+    if (!account) throw new NotFoundException('Account not founded');
+
+    return account;
+  }
+
+  async findUsersByAccountId(accountId: number): Promise<UserEntity[]> {
+    const account = await this.findById(accountId);
+    const users = await this.usersService.findAll({ account });
+    return users;
   }
 }
