@@ -1,8 +1,9 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from '../../users/entities/user.entity';
+import { IAccount } from '@app/interfaces';
 
 @Entity()
-export class AccountEntity {
+export class AccountEntity implements IAccount {
   @PrimaryGeneratedColumn()
   accountId: number;
 

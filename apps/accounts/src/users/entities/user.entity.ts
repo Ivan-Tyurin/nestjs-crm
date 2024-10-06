@@ -1,8 +1,9 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { AccountEntity } from '../../accounts/entities/account.entity';
+import { IUser } from '@app/interfaces';
 
 @Entity()
-export class UserEntity {
+export class UserEntity implements IUser {
   @PrimaryGeneratedColumn()
   userId: number;
 
@@ -15,7 +16,6 @@ export class UserEntity {
   name: string;
 
   /** Почта пользователя */
-  @Column()
   @Column({ unique: true })
   email: string;
 

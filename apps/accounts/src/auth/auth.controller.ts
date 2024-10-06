@@ -1,11 +1,9 @@
 import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { LoginDto } from '@app/contracts';
-import { Public } from './auth.decorator';
-import { LocalAuthGuard } from './guards/local-auth.guard';
+import { LocalAuthGuard } from '@app/guards';
+import { Public } from '@app/decorators';
 
 @ApiTags('Auth')
 @Controller('auth')

@@ -12,7 +12,10 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.usersService.findOne({ email });
+    const user = await this.usersService.findOne(
+      { email },
+      { relations: { account: true } },
+    );
     if (user && (await bcrypt.compare(password, user.password))) {
       const { password, ...result } = user;
       return result;
@@ -21,7 +24,7 @@ export class AuthService {
   }
 
   async login(user: UserEntity) {
-    const payload = { name: user.name, sub: user.userId };
+    const payload = { accountId: user.account.accountId, sub: user.userId };
 
     return {
       accessToken: this.jwtService.sign(payload),
