@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AccountsModule } from './accounts/accounts.module';
 import { UsersModule } from './users/users.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getPostgresConfig } from './configs/postgres.config';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
