@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { PipelineEntity } from './entities/pipeline.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { IAccount } from '@app/interfaces';
 
 @Injectable()
 export class PipelinesService {
@@ -21,5 +20,9 @@ export class PipelinesService {
       ...createPipelineDto,
     });
     return this.pipelinesRepository.save(pipeline);
+  }
+
+  getAll(): Promise<PipelineEntity[]> {
+    return this.pipelinesRepository.find();
   }
 }
