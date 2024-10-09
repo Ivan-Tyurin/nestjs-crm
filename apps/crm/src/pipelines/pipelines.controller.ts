@@ -4,11 +4,14 @@ import { Public, User } from '@app/decorators';
 import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { PipelineEntity } from './entities/pipeline.entity';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Pipelines')
 @Controller('pipelines')
 export class PipelinesController {
   constructor(private pipelinesService: PipelinesService) {}
 
+  /** Создание новой воронки */
   @Post()
   create(
     @User('accountId') accountId: number,
@@ -17,23 +20,25 @@ export class PipelinesController {
     return this.pipelinesService.create(accountId, createPipelineDto);
   }
 
+  /** Получение всех воронок */
+  @Get()
+  findAll(@User('accountId') accountId: number): Promise<PipelineEntity[]> {
+    return this.pipelinesService.getAll({ accountId });
+  }
+
+  /** Создание новой воронки через сторонний микросервис */
   @Public()
   @MessagePattern({ cmd: 'create-pipeline' })
   handlerCreate(
     @Payload()
-    payload: {
+    {
+      accountId,
+      createPipelineDto,
+    }: {
       accountId: number;
       createPipelineDto: CreatePipelineDto;
     },
   ) {
-    return this.pipelinesService.create(
-      payload.accountId,
-      payload.createPipelineDto,
-    );
-  }
-
-  @Get()
-  findAll(): Promise<PipelineEntity[]> {
-    return this.pipelinesService.getAll();
+    return this.pipelinesService.create(accountId, createPipelineDto);
   }
 }

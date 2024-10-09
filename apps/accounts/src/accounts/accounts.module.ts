@@ -11,12 +11,23 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     UsersModule,
     TypeOrmModule.forFeature([AccountEntity]),
     ClientsModule.register([
+      // {
+      //   name: 'CRM_SERVICE',
+      //   transport: Transport.TCP,
+      //   options: {
+      //     host: 'localhost',
+      //     port: 3002,
+      //   },
+      // },
       {
         name: 'CRM_SERVICE',
-        transport: Transport.TCP,
+        transport: Transport.RMQ,
         options: {
-          host: 'localhost',
-          port: 3002,
+          urls: ['amqp://localhost:5672'],
+          queue: 'crm_queue',
+          queueOptions: {
+            durable: false,
+          },
         },
       },
     ]),

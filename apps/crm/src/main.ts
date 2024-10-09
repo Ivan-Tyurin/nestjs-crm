@@ -22,10 +22,18 @@ async function bootstrap() {
 
   const microservice =
     await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
-      transport: Transport.TCP,
+      // transport: Transport.TCP,
+      // options: {
+      //   host: 'localhost',
+      //   port: 3002,
+      // },
+      transport: Transport.RMQ,
       options: {
-        host: 'localhost',
-        port: 3002,
+        urls: ['amqp://localhost:5672'],
+        queue: 'crm_queue',
+        queueOptions: {
+          durable: false,
+        },
       },
     });
 

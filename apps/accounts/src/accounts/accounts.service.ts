@@ -55,7 +55,7 @@ export class AccountsService {
           },
         });
 
-      // await queryRunner.commitTransaction();
+      await queryRunner.commitTransaction();
 
       return account;
     } catch (error) {

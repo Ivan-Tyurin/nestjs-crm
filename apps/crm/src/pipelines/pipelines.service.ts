@@ -2,7 +2,7 @@ import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto'
 import { Injectable } from '@nestjs/common';
 import { PipelineEntity } from './entities/pipeline.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 
 @Injectable()
 export class PipelinesService {
@@ -11,10 +11,12 @@ export class PipelinesService {
     private pipelinesRepository: Repository<PipelineEntity>,
   ) {}
 
+  /** Создание новой воронки */
   create(
     accountId: number,
     createPipelineDto: CreatePipelineDto,
   ): Promise<PipelineEntity> {
+    console.log(accountId, createPipelineDto);
     const pipeline = this.pipelinesRepository.create({
       accountId,
       ...createPipelineDto,
@@ -22,7 +24,9 @@ export class PipelinesService {
     return this.pipelinesRepository.save(pipeline);
   }
 
-  getAll(): Promise<PipelineEntity[]> {
+  /** Получение всех воронок */
+  getAll(where: FindOptionsWhere<PipelineEntity>): Promise<PipelineEntity[]> {
     return this.pipelinesRepository.find();
+    // return this.pipelinesRepository.findBy(where);
   }
 }
