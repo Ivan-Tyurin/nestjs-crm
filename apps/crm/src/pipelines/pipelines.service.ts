@@ -12,15 +12,8 @@ export class PipelinesService {
   ) {}
 
   /** Создание новой воронки */
-  create(
-    accountId: number,
-    createPipelineDto: CreatePipelineDto,
-  ): Promise<PipelineEntity> {
-    console.log(accountId, createPipelineDto);
-    const pipeline = this.pipelinesRepository.create({
-      accountId,
-      ...createPipelineDto,
-    });
+  create(createPipelineDto: CreatePipelineDto): Promise<PipelineEntity> {
+    const pipeline = this.pipelinesRepository.create(createPipelineDto);
     return this.pipelinesRepository.save(pipeline);
   }
 

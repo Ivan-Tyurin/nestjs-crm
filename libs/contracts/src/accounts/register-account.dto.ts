@@ -1,9 +1,9 @@
 import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
-import { CreateUserDto } from '../users/create-user.dto';
 import { Type } from 'class-transformer';
+import { CreateUserDto } from '../users/create-user.dto';
 import { CreatePipelineDto } from '../pipelines/create-pipeline.dto';
 
-export class CreateAccountDto {
+export class RegisterAccountDto {
   /** Название аккаунта */
   @IsNotEmpty()
   @IsString()

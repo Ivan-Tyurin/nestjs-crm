@@ -1,41 +1,29 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { AccountEntity } from './entities/account.entity';
 import { AccountsService } from './accounts.service';
-import { ApiTags } from '@nestjs/swagger';
 import { CreateAccountDto } from '@app/contracts';
 import { UserEntity } from '../users/entities/user.entity';
+import { EventPattern, MessagePattern } from '@nestjs/microservices';
 
-@ApiTags('Accounts')
-@Controller('accounts')
+@Controller()
 export class AccountsController {
   constructor(private accountsService: AccountsService) {}
 
   /** Регистрация нового аккаунта */
-  @Post('register')
-  register(@Body() createAccountDto: CreateAccountDto): Promise<AccountEntity> {
+  @MessagePattern('create-account')
+  register(createAccountDto: CreateAccountDto): Promise<AccountEntity> {
     return this.accountsService.register(createAccountDto);
   }
 
   /** Получение аккаунта по ID */
-  @Get(':accountId')
-  findById(
-    @Param('accountId', ParseIntPipe) accountId: number,
-  ): Promise<AccountEntity> {
+  @MessagePattern('find-account-by-id')
+  findById(accountId: number): Promise<AccountEntity> {
     return this.accountsService.findById(accountId);
   }
 
   /** Получения пользователей аккаунта по ID */
-  @Get(':accountId/users')
-  findUsersByAccountId(
-    @Param('accountId', ParseIntPipe) accountId: number,
-  ): Promise<UserEntity[]> {
+  @MessagePattern('find-users-by-accounts-id')
+  findUsersByAccountId(accountId: number): Promise<UserEntity[]> {
     return this.accountsService.findUsersByAccountId(accountId);
   }
 }

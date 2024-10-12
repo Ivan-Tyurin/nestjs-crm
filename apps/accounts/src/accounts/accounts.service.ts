@@ -38,28 +38,10 @@ export class AccountsService {
       createUserDto.accountId = account.accountId;
       await this.usersService.create(createUserDto, queryRunner.manager); // создание основного пользователя (админа) для нового аккаунта
 
-      this.crmClient
-        .send(
-          { cmd: 'create-pipeline' },
-          {
-            accountId: account.accountId,
-            createPipelineDto: createAccountDto.pipeline,
-          },
-        )
-        .subscribe({
-          next: (response) => {
-            console.log(response);
-          },
-          error: (error) => {
-            throw new BadRequestException('Pipeline not created');
-          },
-        });
-
-      await queryRunner.commitTransaction();
+      // await queryRunner.commitTransaction();
 
       return account;
     } catch (error) {
-      console.error(error);
       await queryRunner.rollbackTransaction();
       throw new BadRequestException('Account registration error');
     } finally {
