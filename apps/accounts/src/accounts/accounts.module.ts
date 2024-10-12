@@ -4,26 +4,9 @@ import { AccountsService } from './accounts.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountEntity } from './entities/account.entity';
 import { UsersModule } from '../users/users.module';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
-  imports: [
-    UsersModule,
-    TypeOrmModule.forFeature([AccountEntity]),
-    ClientsModule.register([
-      {
-        name: 'CRM_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'crm_queue',
-          queueOptions: {
-            durable: false,
-          },
-        },
-      },
-    ]),
-  ],
+  imports: [UsersModule, TypeOrmModule.forFeature([AccountEntity])],
   controllers: [AccountsController],
   providers: [AccountsService],
 })

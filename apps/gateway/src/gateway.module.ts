@@ -1,37 +1,52 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AccountsController } from './controllers';
+import {
+  ClientProvider,
+  ClientsModule,
+  Transport,
+} from '@nestjs/microservices';
+import { AccountsController, AuthController } from './controllers';
 import { RegisterAccountSaga } from '@app/sagas/register-account.saga';
 import { RemoveAccountSaga } from '@app/sagas/remove-account.saga';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { JwtAuthGuard } from '@app/guards';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { getAccountsProxy, getCrmProxy } from './configs/rabbitmq.config';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: 'ACCOUNTS_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'accounts_queue',
-          queueOptions: {
-            durable: false,
-          },
+    ConfigModule.forRoot({ isGlobal: true }),
+    ClientsModule.registerAsync({
+      isGlobal: true,
+      clients: [
+        {
+          name: 'ACCOUNTS_SERVICE',
+          inject: [ConfigService],
+          useFactory: getAccountsProxy,
         },
-      },
-      {
-        name: 'CRM_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'crm_queue',
-          queueOptions: {
-            durable: false,
-          },
+        {
+          name: 'CRM_SERVICE',
+          inject: [ConfigService],
+          useFactory: getCrmProxy,
         },
-      },
-    ]),
+      ],
+    }),
+    JwtModule.register({
+      secret: 'secret',
+      signOptions: { expiresIn: '1h' },
+    }),
+    PassportModule,
   ],
-  controllers: [AccountsController],
-  providers: [RegisterAccountSaga, RemoveAccountSaga],
+  controllers: [AuthController, AccountsController],
+  providers: [
+    JwtStrategy,
+    {
+      provide: 'APP_GUARD',
+      useClass: JwtAuthGuard,
+    },
+    RegisterAccountSaga,
+    RemoveAccountSaga,
+  ],
 })
 export class GatewayModule {}

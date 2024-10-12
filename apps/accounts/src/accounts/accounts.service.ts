@@ -19,7 +19,6 @@ export class AccountsService {
     private accountsRepository: Repository<AccountEntity>,
     private dataSource: DataSource,
     private usersService: UsersService,
-    @Inject('CRM_SERVICE') private crmClient: ClientProxy,
   ) {}
 
   async register(createAccountDto: CreateAccountDto): Promise<AccountEntity> {

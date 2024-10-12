@@ -3,10 +3,8 @@ import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { LocalStrategy } from './strategies/local.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { JwtAuthGuard } from '@app/guards';
 
 @Module({
   imports: [
@@ -17,15 +15,7 @@ import { JwtAuthGuard } from '@app/guards';
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  providers: [
-    AuthService,
-    LocalStrategy,
-    JwtStrategy,
-    // {
-    //   provide: 'APP_GUARD',
-    //   useClass: JwtAuthGuard,
-    // },
-  ],
+  providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}

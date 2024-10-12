@@ -24,13 +24,13 @@ export class PipelinesController {
 
   /** Удаление воронки по ID */
   @EventPattern('remove-pipeline-by-id')
-  removeById(pipelineId: number) {
+  removeById(pipelineId: number): Promise<boolean> {
     return this.pipelinesService.removeById(pipelineId);
   }
 
   /** Удаление воронок по ID аккаунта */
   @EventPattern('remove-pipeline-by-account-id')
-  removeByAccountId(accountId: number) {
+  removeByAccountId(accountId: number): Promise<boolean> {
     return this.pipelinesService.remove({ accountId });
   }
 }
