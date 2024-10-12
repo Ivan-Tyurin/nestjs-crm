@@ -1,14 +1,5 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { LoginDto } from '@app/contracts';
-import { LocalAuthGuard } from '@app/guards';
 import { Public } from '@app/decorators';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';

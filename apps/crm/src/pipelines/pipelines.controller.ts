@@ -10,12 +10,6 @@ import { ApiTags } from '@nestjs/swagger';
 export class PipelinesController {
   constructor(private pipelinesService: PipelinesService) {}
 
-  // /** Получение всех воронок */
-  // @Get()
-  // findAll(@User('accountId') accountId: number): Promise<PipelineEntity[]> {
-  //   return this.pipelinesService.getAll({ accountId });
-  // }
-
   /** Создание новой воронки */
   @EventPattern('create-pipeline')
   create(createPipelineDto: CreatePipelineDto) {

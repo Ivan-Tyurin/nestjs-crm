@@ -15,7 +15,9 @@ import { firstValueFrom, Observable } from 'rxjs';
 import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
 import { RegisterAccountSaga } from '@app/sagas/register-account.saga';
 import { RemoveAccountSaga } from '@app/sagas/remove-account.saga';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Accounts')
 @Controller('accounts')
 export class AccountsController {
   constructor(
@@ -25,6 +27,7 @@ export class AccountsController {
     private removeAccountSaga: RemoveAccountSaga,
   ) {}
 
+  /** Регистрация нового аккаунта */
   @Post('register')
   async register(
     @Body() registerAccountDto: RegisterAccountDto,
@@ -48,6 +51,7 @@ export class AccountsController {
     return this.accountProxy.send('find-users-by-accounts-id', accountId);
   }
 
+  /** Удаление аккаунта по ID */
   @Delete(':accountId')
   async remove(
     @Param('accountId', ParseIntPipe) accountId: number,

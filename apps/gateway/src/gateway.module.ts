@@ -4,7 +4,12 @@ import {
   ClientsModule,
   Transport,
 } from '@nestjs/microservices';
-import { AccountsController, AuthController } from './controllers';
+import {
+  AccountsController,
+  AuthController,
+  PipelinesController,
+  UsersController,
+} from './controllers';
 import { RegisterAccountSaga } from '@app/sagas/register-account.saga';
 import { RemoveAccountSaga } from '@app/sagas/remove-account.saga';
 import { JwtModule } from '@nestjs/jwt';
@@ -38,7 +43,12 @@ import { getAccountsProxy, getCrmProxy } from './configs/rabbitmq.config';
     }),
     PassportModule,
   ],
-  controllers: [AuthController, AccountsController],
+  controllers: [
+    AuthController,
+    AccountsController,
+    UsersController,
+    PipelinesController,
+  ],
   providers: [
     JwtStrategy,
     {
