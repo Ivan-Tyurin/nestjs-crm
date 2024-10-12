@@ -38,10 +38,11 @@ export class AccountsService {
       createUserDto.accountId = account.accountId;
       await this.usersService.create(createUserDto, queryRunner.manager); // создание основного пользователя (админа) для нового аккаунта
 
-      // await queryRunner.commitTransaction();
+      await queryRunner.commitTransaction();
 
       return account;
     } catch (error) {
+      console.log(error);
       await queryRunner.rollbackTransaction();
       throw new BadRequestException('Account registration error');
     } finally {
@@ -62,9 +63,10 @@ export class AccountsService {
     return users;
   }
 
-  async removeById(accountId: number): Promise<void> {
-    console.log(`Удален аккаунт ID: ${accountId}`);
-    // const account = await this.findById(accountId)
-    // this.accountsRepository.remove(account)
+  async removeById(accountId: number): Promise<boolean> {
+    const account = await this.findById(accountId);
+    await this.accountsRepository.remove(account);
+
+    return true;
   }
 }

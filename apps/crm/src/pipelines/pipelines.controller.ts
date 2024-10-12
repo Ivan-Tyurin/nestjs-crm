@@ -25,7 +25,12 @@ export class PipelinesController {
   /** Удаление воронки по ID */
   @EventPattern('remove-pipeline-by-id')
   removeById(pipelineId: number) {
-    this.pipelinesService.removeById(pipelineId);
-    return { success: true };
+    return this.pipelinesService.removeById(pipelineId);
+  }
+
+  /** Удаление воронок по ID аккаунта */
+  @EventPattern('remove-pipeline-by-account-id')
+  removeByAccountId(accountId: number) {
+    return this.pipelinesService.remove({ accountId });
   }
 }

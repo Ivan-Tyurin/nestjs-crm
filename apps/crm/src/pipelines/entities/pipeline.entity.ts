@@ -23,6 +23,9 @@ export class PipelineEntity implements IPipeline {
   @Column()
   name: string;
 
-  @OneToMany(() => LeadEntity, (lead) => lead.pipeline)
+  @OneToMany(() => LeadEntity, (lead) => lead.pipeline, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   leads: LeadEntity[];
 }

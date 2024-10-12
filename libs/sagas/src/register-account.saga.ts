@@ -2,6 +2,7 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { RegisterAccountDto } from '@app/contracts';
 import { CreateAccountStep, CreatePipelineStep } from './steps';
+import { IAccount } from '@app/interfaces';
 
 @Injectable()
 export class RegisterAccountSaga {
@@ -16,7 +17,7 @@ export class RegisterAccountSaga {
     this.createPipelineStep = new CreatePipelineStep(this.crmProxy);
   }
 
-  async exec(registerAccountDto: RegisterAccountDto) {
+  async exec(registerAccountDto: RegisterAccountDto): Promise<IAccount> {
     try {
       const { pipeline: createPipelineDto, ...createAccountDto } =
         registerAccountDto;

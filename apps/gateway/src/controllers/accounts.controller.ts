@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -13,6 +14,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom, Observable } from 'rxjs';
 import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
 import { RegisterAccountSaga } from '@app/sagas/register-account.saga';
+import { RemoveAccountSaga } from '@app/sagas/remove-account.saga';
 
 @Controller('accounts')
 export class AccountsController {
@@ -20,6 +22,7 @@ export class AccountsController {
     @Inject('ACCOUNTS_SERVICE') private accountProxy: ClientProxy,
     @Inject('CRM_SERVICE') private crmProxy: ClientProxy,
     private registerAccountSaga: RegisterAccountSaga,
+    private removeAccountSaga: RemoveAccountSaga,
   ) {}
 
   @Post('register')
@@ -43,5 +46,12 @@ export class AccountsController {
     @Param('accountId', ParseIntPipe) accountId: number,
   ): Observable<IUser[]> {
     return this.accountProxy.send('find-users-by-accounts-id', accountId);
+  }
+
+  @Delete(':accountId')
+  async remove(
+    @Param('accountId', ParseIntPipe) accountId: number,
+  ): Promise<void> {
+    this.removeAccountSaga.exec(accountId);
   }
 }

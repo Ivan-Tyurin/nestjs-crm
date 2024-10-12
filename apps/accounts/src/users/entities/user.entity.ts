@@ -25,6 +25,7 @@ export class UserEntity implements IUser {
 
   @ManyToOne(() => AccountEntity, (account) => account.users, {
     nullable: false,
+    onDelete: 'CASCADE',
   })
   account: AccountEntity;
 }

@@ -17,9 +17,8 @@ export class AccountsController {
 
   /** Удаление аккаунта по ID */
   @MessagePattern('remove-account-by-id')
-  removeById(accountId: number) {
-    this.accountsService.removeById(accountId);
-    return { success: true };
+  removeById(accountId: number): Promise<boolean> {
+    return this.accountsService.removeById(accountId);
   }
 
   /** Получение аккаунта по ID */

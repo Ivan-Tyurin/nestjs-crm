@@ -1,5 +1,5 @@
 import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PipelineEntity } from './entities/pipeline.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
@@ -19,13 +19,27 @@ export class PipelinesService {
 
   /** Получение всех воронок */
   getAll(where: FindOptionsWhere<PipelineEntity>): Promise<PipelineEntity[]> {
-    return this.pipelinesRepository.find();
-    // return this.pipelinesRepository.findBy(where);
+    return this.pipelinesRepository.findBy(where);
   }
 
-  removeById(pipelineId: number) {
-    console.log(`Удален аккаунт ID: ${pipelineId}`);
-    // const pipeline = await this.findById(pipelineId)
-    // this.pipelinesRepository.remove(pipeline)
+  async findById(pipelineId: number): Promise<PipelineEntity> {
+    const account = await this.pipelinesRepository.findOneBy({ pipelineId });
+    if (!account) throw new NotFoundException('Pipeline not founded');
+
+    return account;
+  }
+
+  async removeById(pipelineId: number): Promise<boolean> {
+    const pipeline = await this.findById(pipelineId);
+    await this.pipelinesRepository.remove(pipeline);
+
+    return true;
+  }
+
+  async remove(where: FindOptionsWhere<PipelineEntity>): Promise<boolean> {
+    const pipelines = await this.getAll(where);
+    await this.pipelinesRepository.remove(pipelines);
+
+    return true;
   }
 }

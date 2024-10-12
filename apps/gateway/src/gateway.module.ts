@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AccountsController } from './controllers';
 import { RegisterAccountSaga } from '@app/sagas/register-account.saga';
+import { RemoveAccountSaga } from '@app/sagas/remove-account.saga';
 
 @Module({
   imports: [
@@ -31,11 +32,6 @@ import { RegisterAccountSaga } from '@app/sagas/register-account.saga';
     ]),
   ],
   controllers: [AccountsController],
-  providers: [
-    {
-      provide: RegisterAccountSaga,
-      useClass: RegisterAccountSaga,
-    },
-  ],
+  providers: [RegisterAccountSaga, RemoveAccountSaga],
 })
 export class GatewayModule {}

@@ -11,6 +11,9 @@ export class AccountEntity implements IAccount {
   @Column({ unique: true })
   name: string;
 
-  @OneToMany(() => UserEntity, (user) => user.account)
+  @OneToMany(() => UserEntity, (user) => user.account, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   users: UserEntity[];
 }
