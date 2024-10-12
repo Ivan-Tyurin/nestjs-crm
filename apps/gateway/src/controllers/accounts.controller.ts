@@ -12,31 +12,21 @@ import { CreateAccountDto, RegisterAccountDto } from '@app/contracts';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom, Observable } from 'rxjs';
 import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
+import { RegisterAccountSaga } from '@app/sagas/register-account.saga';
 
 @Controller('accounts')
 export class AccountsController {
   constructor(
     @Inject('ACCOUNTS_SERVICE') private accountProxy: ClientProxy,
     @Inject('CRM_SERVICE') private crmProxy: ClientProxy,
+    private registerAccountSaga: RegisterAccountSaga,
   ) {}
 
   @Post('register')
   async register(
     @Body() registerAccountDto: RegisterAccountDto,
   ): Promise<IAccount> {
-    const { pipeline: createPipelineDto, ...createAccountDto } =
-      registerAccountDto;
-
-    const account: IAccount = await firstValueFrom(
-      this.accountProxy.send('create-account', createAccountDto),
-    );
-
-    createPipelineDto.accountId = account.accountId;
-    const pipeline = await firstValueFrom(
-      this.crmProxy.send('create-pipeline', createPipelineDto),
-    );
-
-    return account;
+    return this.registerAccountSaga.exec(registerAccountDto);
   }
 
   /** Получение аккаунта по ID */

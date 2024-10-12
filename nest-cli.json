@@ -81,6 +81,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/gateway/tsconfig.app.json"
       }
+    },
+    "sagas": {
+      "type": "library",
+      "root": "libs/sagas",
+      "entryFile": "index",
+      "sourceRoot": "libs/sagas/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/sagas/tsconfig.lib.json"
+      }
     }
   }
 }

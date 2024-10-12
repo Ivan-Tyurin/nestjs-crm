@@ -61,4 +61,10 @@ export class AccountsService {
     const users = await this.usersService.findAll({ account });
     return users;
   }
+
+  async removeById(accountId: number): Promise<void> {
+    console.log(`Удален аккаунт ID: ${accountId}`);
+    // const account = await this.findById(accountId)
+    // this.accountsRepository.remove(account)
+  }
 }

@@ -10,15 +10,6 @@ import { ApiTags } from '@nestjs/swagger';
 export class PipelinesController {
   constructor(private pipelinesService: PipelinesService) {}
 
-  // /** Создание новой воронки */
-  // @Post()
-  // create(
-  //   @User('accountId') accountId: number,
-  //   @Body() createPipelineDto: CreatePipelineDto,
-  // ): Promise<CreatePipelineDto> {
-  //   return this.pipelinesService.create(accountId, createPipelineDto);
-  // }
-
   // /** Получение всех воронок */
   // @Get()
   // findAll(@User('accountId') accountId: number): Promise<PipelineEntity[]> {
@@ -27,7 +18,14 @@ export class PipelinesController {
 
   /** Создание новой воронки */
   @EventPattern('create-pipeline')
-  handlerCreate(createPipelineDto: CreatePipelineDto) {
+  create(createPipelineDto: CreatePipelineDto) {
     return this.pipelinesService.create(createPipelineDto);
+  }
+
+  /** Удаление воронки по ID */
+  @EventPattern('remove-pipeline-by-id')
+  removeById(pipelineId: number) {
+    this.pipelinesService.removeById(pipelineId);
+    return { success: true };
   }
 }

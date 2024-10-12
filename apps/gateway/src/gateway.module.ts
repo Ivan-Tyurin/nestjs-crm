@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AccountsController } from './controllers';
+import { RegisterAccountSaga } from '@app/sagas/register-account.saga';
 
 @Module({
   imports: [
@@ -30,5 +31,11 @@ import { AccountsController } from './controllers';
     ]),
   ],
   controllers: [AccountsController],
+  providers: [
+    {
+      provide: RegisterAccountSaga,
+      useClass: RegisterAccountSaga,
+    },
+  ],
 })
 export class GatewayModule {}

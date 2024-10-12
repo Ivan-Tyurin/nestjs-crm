@@ -22,4 +22,10 @@ export class PipelinesService {
     return this.pipelinesRepository.find();
     // return this.pipelinesRepository.findBy(where);
   }
+
+  removeById(pipelineId: number) {
+    console.log(`Удален аккаунт ID: ${pipelineId}`);
+    // const pipeline = await this.findById(pipelineId)
+    // this.pipelinesRepository.remove(pipeline)
+  }
 }

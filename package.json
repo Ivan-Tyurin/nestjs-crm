@@ -92,7 +92,8 @@
       "^@app/contracts(|/.*)$": "<rootDir>/libs/contracts/src/$1",
       "^@app/guards(|/.*)$": "<rootDir>/libs/guards/src/$1",
       "^@app/decorators(|/.*)$": "<rootDir>/libs/decorators/src/$1",
-      "^@app/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1"
+      "^@app/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1",
+      "^@app/sagas(|/.*)$": "<rootDir>/libs/sagas/src/$1"
     }
   }
 }

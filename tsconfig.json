@@ -41,6 +41,12 @@
       ],
       "@app/interfaces/*": [
         "libs/interfaces/src/*"
+      ],
+      "@app/sagas": [
+        "libs/sagas/src"
+      ],
+      "@app/sagas/*": [
+        "libs/sagas/src/*"
       ]
     }
   }

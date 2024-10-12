@@ -15,6 +15,13 @@ export class AccountsController {
     return this.accountsService.register(createAccountDto);
   }
 
+  /** Удаление аккаунта по ID */
+  @MessagePattern('remove-account-by-id')
+  removeById(accountId: number) {
+    this.accountsService.removeById(accountId);
+    return { success: true };
+  }
+
   /** Получение аккаунта по ID */
   @MessagePattern('find-account-by-id')
   findById(accountId: number): Promise<AccountEntity> {
