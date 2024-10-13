@@ -1,4 +1,11 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Inject,
+  Post,
+} from '@nestjs/common';
 import { LoginDto } from '@app/contracts';
 import { Public } from '@app/decorators';
 import { ClientProxy } from '@nestjs/microservices';
@@ -11,6 +18,7 @@ export class AuthController {
 
   /** Аутентификация пользователя */
   @Public()
+  @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
     return this.accountsProxy.send('auth-login', loginDto);

@@ -1,8 +1,8 @@
 import { IPipeline } from '@app/interfaces';
 import { SagaStep } from '../interfaces/saga-step.interface';
-import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
+import { CreatePipelineDto } from '@app/contracts';
 
 export class CreatePipelineStep
   implements SagaStep<CreatePipelineDto, IPipeline>

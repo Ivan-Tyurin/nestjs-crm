@@ -1,9 +1,8 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { RegisterAccountDto } from '@app/contracts';
+import { CreatePipelineDto, RegisterAccountDto } from '@app/contracts';
 import { CreateAccountStep, CreatePipelineStep } from './steps';
 import { IAccount } from '@app/interfaces';
-import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
 
 @Injectable()
 export class RegisterAccountSaga {

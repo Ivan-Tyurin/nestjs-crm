@@ -9,13 +9,11 @@ import {
   Post,
 } from '@nestjs/common';
 import { IAccount, IUser } from '@app/interfaces';
-import { CreateAccountDto, RegisterAccountDto } from '@app/contracts';
+import { RegisterAccountDto } from '@app/contracts';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom, Observable } from 'rxjs';
-import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
-import { RegisterAccountSaga } from '@app/sagas/register-account.saga';
-import { RemoveAccountSaga } from '@app/sagas/remove-account.saga';
 import { ApiTags } from '@nestjs/swagger';
+import { RegisterAccountSaga, RemoveAccountSaga } from '@app/sagas';
 
 @ApiTags('Accounts')
 @Controller('accounts')
@@ -56,6 +54,6 @@ export class AccountsController {
   async remove(
     @Param('accountId', ParseIntPipe) accountId: number,
   ): Promise<void> {
-    this.removeAccountSaga.exec(accountId);
+    await this.removeAccountSaga.exec(accountId);
   }
 }

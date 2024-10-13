@@ -1,8 +1,8 @@
-import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PipelineEntity } from './entities/pipeline.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
+import { CreatePipelineDto } from '@app/contracts';
 
 @Injectable()
 export class PipelinesService {

@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { PipelinesService } from './pipelines.service';
-import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { PipelineEntity } from './entities/pipeline.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { CreatePipelineDto } from '@app/contracts';
 
 @ApiTags('Pipelines')
 @Controller('pipelines')

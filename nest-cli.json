@@ -1,11 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/nestjs-crm/src",
+  "sourceRoot": "apps/gateway/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/nestjs-crm/tsconfig.app.json",
+    "tsConfigPath": "apps/gateway/tsconfig.app.json",
     "plugins": [
       {
         "name": "@nestjs/swagger",
@@ -17,7 +17,7 @@
     ]
   },
   "monorepo": true,
-  "root": "apps/nestjs-crm",
+  "root": "apps/gateway",
   "projects": {
     "accounts": {
       "type": "application",

@@ -1,5 +1,4 @@
 import { CreateUserDto } from '@app/contracts';
-import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
 import { IUser } from '@app/interfaces';
 import { Body, Controller, Delete, Inject, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';

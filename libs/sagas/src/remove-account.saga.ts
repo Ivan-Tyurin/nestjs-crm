@@ -15,12 +15,14 @@ export class RemoveAccountSaga {
     this.removePipelineStep = new RemovePipelineStep(this.crmProxy);
   }
 
-  async exec(accountId: number): Promise<void> {
+  async exec(accountId: number): Promise<boolean> {
     try {
       await Promise.all([
         this.removeAccountStep.start(accountId),
         this.removePipelineStep.start(accountId),
       ]);
+
+      return true;
     } catch (error) {
       throw new BadRequestException('Failed to deletion account');
     }

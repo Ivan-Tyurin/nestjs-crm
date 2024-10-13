@@ -1,4 +1,4 @@
-import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
+import { CreatePipelineDto } from '@app/contracts';
 import { Body, Controller, Delete, Inject, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
