@@ -15,5 +15,5 @@ export class AccountEntity implements IAccount {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  users: UserEntity[];
+  users?: UserEntity[];
 }

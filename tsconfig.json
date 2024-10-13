@@ -18,36 +18,18 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/contracts": [
-        "libs/contracts/src"
-      ],
-      "@app/contracts/*": [
-        "libs/contracts/src/*"
-      ],
-      "@app/guards": [
-        "libs/guards/src"
-      ],
-      "@app/guards/*": [
-        "libs/guards/src/*"
-      ],
-      "@app/decorators": [
-        "libs/decorators/src"
-      ],
-      "@app/decorators/*": [
-        "libs/decorators/src/*"
-      ],
-      "@app/interfaces": [
-        "libs/interfaces/src"
-      ],
-      "@app/interfaces/*": [
-        "libs/interfaces/src/*"
-      ],
-      "@app/sagas": [
-        "libs/sagas/src"
-      ],
-      "@app/sagas/*": [
-        "libs/sagas/src/*"
-      ]
+      "@app/contracts": ["libs/contracts/src"],
+      "@app/contracts/*": ["libs/contracts/src/*"],
+      "@app/guards": ["libs/guards/src"],
+      "@app/guards/*": ["libs/guards/src/*"],
+      "@app/decorators": ["libs/decorators/src"],
+      "@app/decorators/*": ["libs/decorators/src/*"],
+      "@app/interfaces": ["libs/interfaces/src"],
+      "@app/interfaces/*": ["libs/interfaces/src/*"],
+      "@app/sagas": ["libs/sagas/src"],
+      "@app/sagas/*": ["libs/sagas/src/*"],
+      "@app/services": ["libs/services/src"],
+      "@app/services/*": ["libs/services/src/*"]
     }
   }
 }

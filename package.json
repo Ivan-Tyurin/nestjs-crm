@@ -93,7 +93,9 @@
       "^@app/guards(|/.*)$": "<rootDir>/libs/guards/src/$1",
       "^@app/decorators(|/.*)$": "<rootDir>/libs/decorators/src/$1",
       "^@app/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1",
-      "^@app/sagas(|/.*)$": "<rootDir>/libs/sagas/src/$1"
+      "^@app/sagas(|/.*)$": "<rootDir>/libs/sagas/src/$1",
+      "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
+      "^@app/services(|/.*)$": "<rootDir>/libs/services/src/$1"
     }
   }
 }

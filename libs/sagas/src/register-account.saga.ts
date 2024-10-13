@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { RegisterAccountDto } from '@app/contracts';
 import { CreateAccountStep, CreatePipelineStep } from './steps';
 import { IAccount } from '@app/interfaces';
+import { CreatePipelineDto } from '@app/contracts/pipelines/create-pipeline.dto';
 
 @Injectable()
 export class RegisterAccountSaga {
@@ -19,13 +20,16 @@ export class RegisterAccountSaga {
 
   async exec(registerAccountDto: RegisterAccountDto): Promise<IAccount> {
     try {
-      const { pipeline: createPipelineDto, ...createAccountDto } =
-        registerAccountDto;
+      const { pipeline, ...createAccountDto } = registerAccountDto;
 
       const account = await this.createAccountStep.start(createAccountDto);
 
-      createPipelineDto.accountId = account.accountId;
-      const pipeline = await this.createPipelineStep.start(createPipelineDto);
+      const createPipelineDto: CreatePipelineDto = {
+        ...pipeline,
+        accountId: account.accountId,
+      };
+
+      await this.createPipelineStep.start(createPipelineDto);
 
       return account;
     } catch (error) {

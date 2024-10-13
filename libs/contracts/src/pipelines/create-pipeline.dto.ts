@@ -1,10 +1,10 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreatePipelineDto {
   /** ID аккаунта */
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
-  accountId: number;
+  accountId?: number;
 
   /** Название воронки */
   @IsNotEmpty()

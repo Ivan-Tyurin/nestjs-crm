@@ -90,6 +90,24 @@
       "compilerOptions": {
         "tsConfigPath": "libs/sagas/tsconfig.lib.json"
       }
+    },
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
+    "services": {
+      "type": "library",
+      "root": "libs/services",
+      "entryFile": "index",
+      "sourceRoot": "libs/services/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/services/tsconfig.lib.json"
+      }
     }
   }
 }
