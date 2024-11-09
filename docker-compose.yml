@@ -32,7 +32,19 @@ services:
     volumes:
       - crm-rabbitmq:/var/lib/rabbitmq
 
+  crm-cache:
+    image: redis
+    environment:
+      REDIS_PASSWORD: ${CRM_CACHE_PASSWORD}
+      REDIS_USER: ${CRM_CACHE_USER}
+      REDIS_USER_PASSWORD: ${CRM_CACHE_USER}
+    ports:
+      - ${CRM_CACHE_PORT}:6379
+    volumes:
+      - crm-cache:/data
+
 volumes:
   accounts-db:
   crm-db:
   crm-rabbitmq:
+  crm-cache:

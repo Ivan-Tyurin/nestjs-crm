@@ -8,6 +8,8 @@ import { SourcesModule } from './sources/sources.module';
 import { FieldsModule } from './fields/fields.module';
 import { LeadsModule } from './leads/leads.module';
 import { ClientsModule } from './clients/clients.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import { getRedisStore } from './configs/redis.config';
 
 @Module({
   imports: [
@@ -21,6 +23,11 @@ import { ClientsModule } from './clients/clients.module';
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: getPostgresConfig,
+    }),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      inject: [ConfigService],
+      useFactory: getRedisStore,
     }),
   ],
   providers: [],
